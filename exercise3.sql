@@ -61,7 +61,7 @@ from emp;
 
 --4. 각 직급별로 총월급을 출력하되 총월급이 낮은 순으로 출력하시오.
 
---	직급명	총월급
+--	직급명    	총월급
 	----------------------------
 --	xxxx          xxx
 --	 :	   :
@@ -71,7 +71,8 @@ select job as 직급명, sum(sal) as 총월급
 from emp
 group by job
 order by sum(sal) asc;
-
+--order by 총월급; 으로 해도 됨.
+--order by 2(두번째 열); 으로 해도 됨. 하지만 이제 쓰지 않는 쪽으로 지향한다.
 
 --5. 각 부서에서 근무하는 직원들의 명수를 알고싶다. 다음 형식으로 출력하는 SQL
 --    을 작성하시오 .
@@ -87,16 +88,34 @@ select nvl2(deptno, TO_CHAR(deptno)||'번 부서', '미정') as 부서정보, count(*)||'
 from emp
 group by deptno;
 
+--2번 방법 : case 구문 사용하기
+select case deptno
+when 10 then '10번 부서'
+when 20 then '20번 부서'
+when 30 then '30번 부서'
+else '미정' 
+end 부서정보,
+count(*)||'명' 직원명수
+from emp
+group by deptno;
+
+-- 3번 방법 : decode 구문 사용하기
+select decode(deptno, 10, '10번 부서', 20, '20번 부서', 30, '30번 부서', '미정') 부서정보, count(*)||'명' 직원명수
+from emp
+group by deptno;
+
+
+
 
 --6. 년도별로 몇명이 입사했는지 알고싶다. 다음 형식으로 출력하는 SQL
 --    을 작성하시오 . (많이 입사한 순으로 출력)
 
-	입사년도 	   입사 인원수
+--	입사년도 	   입사 인원수
 	----------------------------
-	1981년	   10명
-	1987년	   2명
-	1982년	   1명
-	1980년	   1명
+--	1981년	   10명
+--	1987년	   2명
+--	1982년	   1명
+--	1980년	   1명
 
 
 select to_char(hiredate, 'YYYY')||'년도' as 입사년도, count(*)||'명' as 직원명수
