@@ -146,6 +146,8 @@ where job != 'MANAGER'
 group by job
 having sum(sal)>5000;
 
+--그룹함수에 대한 조건절이면 having절, 아닌 것 같으면 where절이라 생각해보자.
+
 --9. 30번 부서의 업무별 년봉의 평균을 검색한다.
 -- 연봉계산은 월급+커미션(null이면 0으로 계산)이며 
 -- 출력 양식은 소수점 이하 두 자리(반올림)까지 통일된 양식으로 출력한다.
@@ -154,7 +156,7 @@ having sum(sal)>5000;
  --             xxxx         xxx.xx
 --	              :	           :
 
-select job as 업무명, to_char(round(avg(sal+nvl(comm,0)*12),2), '999,999.00') as 평균월급
+select job as 업무명, to_char(round(avg(sal+nvl(comm,0)*12),2), '999999.00') as 평균월급
 from emp
 where deptno = 30
 group by job;
@@ -163,14 +165,14 @@ group by job;
 --     입사월별로 오름차순이며 입사인원이 2명 이상인 경우에만 출력한다.
 
 
-	02월	2명
-	04월	2명
-	05월	2명
-	09월	2명
-	12월	3명
+--	02월	2명
+--	04월	2명
+--	05월	2명
+--	09월	2명
+--	12월	3명
 
 
-select to_char(hiredate, 'MM')||'월' as 월별, count(*)||'명'
+select to_char(hiredate, 'MM')||'월' 월별, count(*)||'명' 명수
 from emp
 group by to_char(hiredate, 'MM')
 having count(*) >= '2'
