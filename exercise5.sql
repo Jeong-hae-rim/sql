@@ -83,6 +83,12 @@ where e.deptno = d.deptno
 and sal between s.losal and s.hisal
 and e.deptno = '10';
 
+-- 이런 방법도 있다
+select e.deptno 부서번호, d.dname 부서이름, e.ename 직원이름, e.sal 월급, s.grade 급여등급
+from emp e join dept d on (e.deptno = d.deptno)
+join salgrade s on (sal between s.losal and s.hisal)
+and e.deptno = '10';
+
 -- 7. 부서번호가 10번, 20번인 직원들의 부서번호, 부서이름, 
 -- 직원이름, 월급, 급여등급을 출력하시오. 그리고 그 출력된 
 -- 결과물을 부서번호가 낮은 순으로, 월급이 많은 순으로 정렬하시오. (7개 행)
