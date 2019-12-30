@@ -11,8 +11,7 @@
 select e.ename 이름, e.job 업무, d.dname 부서이름
 from emp e, dept d
 where d.loc = 'DALLAS' and e.deptno = d.deptno;
-
-
+-- 대문자인지 소문자인지 확신이 서지 않을 때는 upper(d.loc)로.
 
 
 -- 2. 이름에 'A'가 들어가는 직원들의 이름과 부서이름을 출력하시오.
@@ -27,10 +26,9 @@ where d.loc = 'DALLAS' and e.deptno = d.deptno;
 
 select e.ename, d.dname
 from emp e, dept d
-where ename like '%A%' and e.deptno = d.deptno;
+where e.deptno = d.deptno
+and e.ename like '%A%';
 
-select * from emp;
-select * from dept;
 
 -- 3. 직원이름과 그 직원이 속한 부서의 부서명, 그리고 월급을 
 --출력하는데 월급이 3000이상인 직원을 출력하시오. 
@@ -40,9 +38,9 @@ select * from dept;
 --KING	   ACCOUNTING	5,000원
 --FORD	   RESEARCH	3,000원
 
-select e.ename 직원이름, d.dname 부서명, sal 월급
+select e.ename 직원이름, d.dname 부서명, to_char(sal, '999,999')||'원' 월급
 from emp e, dept d
-where e.deptno = d.deptno
+where e.deptno = d.deptno --조인 조건
 and sal >= '3000';
 
 
@@ -73,14 +71,9 @@ and e.job = 'SALESMAN';
 
 select e.empno 직원번호, e.ename 직원이름, (e.sal)*12 연봉, (e.sal+nvl(e.comm,'0'))*12 실급여, s.grade 급여등급
 from emp e, salgrade s
-where sal between s.losal and s.hisal
+where sal between s.losal and s.hisal -- 등가 조건으로는 조인할 수 없어 비등가 조건으로 조인
 and e.comm is not null
 order by s.grade asc;
-
-
-select * from salgrade;
-
-
 
 
 -- 6. 부서번호가 10번인 직원들의 부서번호, 부서이름, 직원이름,
