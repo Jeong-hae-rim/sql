@@ -16,3 +16,38 @@ where ename = 'SMITH';
 
 select sysdate, to_char(sysdate, 'ww') as w
 from dual;
+
+select * from emp;
+select * from dept;
+
+select * from emp, dept;
+
+select * from emp, dept where emp.deptno = dept.deptno;
+
+select * from emp, dept where emp.deptno = dept.deptno(+);
+
+select * from emp, dept where emp.deptno(+) = dept.deptno;
+
+select * from emp, dept where emp.deptno(+) = dept.deptno(+) ;
+
+¡é
+
+select * from emp, dept where emp.deptno = dept.deptno(+) 
+union
+select * from emp, dept where emp.deptno(+) = dept.deptno;
+
+select * from salgrade;
+
+select *from emp, salgrade where emp.sal between salgrade.losal and salgrade.hisal;
+
+select e1.empno, e1.ename, e1.mgr, e2.empno, e2.ename, e2.mgr
+from emp e1, emp e2
+where e1.mgr = e2.empno;
+
+select e.ename, m.ename
+from emp e, emp m
+where e.mgr = m.empno;
+
+select e.ename, nvl(m.ename, '¾øÀ½')
+from emp e, emp m
+where e.mgr = m.empno(+);
